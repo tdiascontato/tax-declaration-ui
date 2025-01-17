@@ -1,27 +1,29 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import styles from "../styles/navbar.module.css";
 
-const Navbar = () => {
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface NavbarProps {
+  items: NavItem[];
+}
+
+const Navbar = ({ items }: NavbarProps) => {
   const { user, logout } = useAuth();
   const router = useRouter();
 
   return (
-    <nav>
-      <ul>
-        {!user ? (
-          <>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          </>
-        ) : (
-          <>
-            <li><a href="/home">Home</a></li>
-            <li>
-              <button onClick={logout}>Logout</button>
+    <nav className={ styles.ContainerMainNavBar }>
+      <ul className={ styles.ContainerUlNavBar }>
+          {items.map((item, index) => (
+            <li key={index}>
+              <a href={item.href}>{item.label}</a>
             </li>
-          </>
-        )}
+          ))}
       </ul>
     </nav>
   );
