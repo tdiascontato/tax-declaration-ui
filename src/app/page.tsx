@@ -1,23 +1,31 @@
 // tax-declaration-ui\src\app\page.tsx
 "use client";
 import styles from "./page.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
+import Navbar from "@/components/NavBar";
 
 const Home = () => {
-  const { user } = useAuth();
+  const { checkAuth, logout } = useAuth();
+  const [user, setUser] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    }
-  }, [user, router]);
+    const verifyUser = async () => {
+      const authUser = await checkAuth();
+      if (authUser) {
+        setUser(JSON.parse(authUser).user.name);
+      }
+    };
+
+    verifyUser();
+  }, [checkAuth, router]);
 
   return (
     <div>
-      <h1 className={styles.containerMainHome}>Welcome {user?.email}</h1>
+      <Navbar items={[ {label: "Dashboard", href: "/dashboard"}, { label: "Logout", onClick: () => logout() } ] }/>
+      <h1 className={styles.containerMainHome}>Welcome {user}</h1>
     </div>
   );
 };

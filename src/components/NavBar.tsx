@@ -5,7 +5,8 @@ import styles from "../styles/navbar.module.css";
 
 interface NavItem {
   label: string;
-  href: string;
+  href?: string;
+  onClick?: () => void;
 }
 
 interface NavbarProps {
@@ -13,7 +14,6 @@ interface NavbarProps {
 }
 
 const Navbar = ({ items }: NavbarProps) => {
-  const { user, logout } = useAuth();
   const router = useRouter();
 
   return (
@@ -21,7 +21,11 @@ const Navbar = ({ items }: NavbarProps) => {
       <ul className={ styles.ContainerUlNavBar }>
           {items.map((item, index) => (
             <li key={index}>
-              <a href={item.href}>{item.label}</a>
+              <a 
+              href={item.href} 
+              onClick={item.onClick}>
+                {item.label}
+              </a>
             </li>
           ))}
       </ul>

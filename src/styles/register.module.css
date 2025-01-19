@@ -43,6 +43,14 @@
     font-size: 1rem;
     transition: background-color 0.3s ease;
 }
+
 .FormMainRegister > button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 500px) {
+    .FormMainRegister > button {
+        font-size: 0.9rem;
+        padding: 0.8rem 0.5rem;
+    }
 }

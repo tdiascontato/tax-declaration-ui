@@ -16,7 +16,6 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(email, password);
-      router.push("/home");
     } catch (err) {
       console.error(error);
     }

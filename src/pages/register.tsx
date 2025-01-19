@@ -9,6 +9,7 @@ const Register = () => {
   const { register, loading, error } = useAuth();
   const router = useRouter();
   
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,8 +21,7 @@ const Register = () => {
       return;
     }
     try {
-      await register(email, password);
-      router.push("/home");
+      await register(name, email, password);
     } catch (err) {
       console.error(error);
     }
@@ -32,27 +32,10 @@ const Register = () => {
         <Navbar items={[{label: 'Login', href: '/login'}]}/>
         <h1>Register</h1>
         <form onSubmit={handleSubmit} className={ styles.FormMainRegister}>
-            <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            placeholder="Email" 
-            required 
-            />
-            <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            placeholder="Password" 
-            required 
-            />
-            <input 
-            type="password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            placeholder="Confirm Password" 
-            required 
-            />
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
             <button type="submit" disabled={loading}>
             {loading ? "Registering..." : "Register"}
             </button>
