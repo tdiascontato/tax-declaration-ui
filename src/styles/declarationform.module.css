@@ -1,0 +1,54 @@
+.ContainerFormDeclaration {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2rem;
+}
+
+.ContainerFormDeclaration > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.TitleHeaderLabel {
+    font-size: 0.9rem;
+}
+
+.ContainerFormDeclaration > div > input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    outline: none;
+}
+.ContainerFormDeclaration > div > input:focus {
+    border-color: #15b307;
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 30, 0.25);
+}
+
+.ContainerFormDeclaration > div > label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin: 0.3rem 0;
+}
+
+.ContainerFormDeclaration > button {
+    width: 50%;
+    padding: 0.5rem 1rem;
+    background-color: #15b307;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+@media (max-width: 500px) {
+    .ContainerFormDeclaration > button {
+        width: fit-content;
+    }
+}

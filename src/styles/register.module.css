@@ -1,6 +1,6 @@
 .ContainerMainRegister { 
-    width: 50%;
-    max-width: 25rem;
+    width: 40%;
+    max-width: 20rem;
     display: flex;
     flex-direction: column;
     justify-self: center;

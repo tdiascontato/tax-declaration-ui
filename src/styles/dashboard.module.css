@@ -1,0 +1,25 @@
+.ContainerMainDeclaration {
+    width: 40%;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column; 
+    justify-self: center;
+    padding: 0;
+    margin: 0;
+}
+
+.HeaderDashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.HeaderDashboard > h1 {
+    font-size: 1.5rem;
+}
+
+.LogoImageReceitaFedral {
+    width: 5rem;
+    height: 3rem;
+}
