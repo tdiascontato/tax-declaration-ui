@@ -1,5 +1,5 @@
 .ContainerFormDeclaration {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -24,7 +24,7 @@
     outline: none;
 }
 .ContainerFormDeclaration > div > input:focus {
-    border-color: #15b307;
+    border-color: #9ba63d;
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 30, 0.25);
 }
 
@@ -37,7 +37,7 @@
 .ContainerFormDeclaration > button {
     width: 50%;
     padding: 0.5rem 1rem;
-    background-color: #15b307;
+    background-color: #9ba63d;
     color: white;
     border: none;
     border-radius: 0.25rem;
@@ -45,6 +45,10 @@
     font-size: 0.9rem;
     margin-top: 0.5rem;
     transition: background-color 0.3s ease;
+}
+.ContainerFormDeclaration > button:hover {
+    background-color: #bccb34;
+    transition: 0.3s ease;
 }
 
 @media (max-width: 500px) {

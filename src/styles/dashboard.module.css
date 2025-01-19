@@ -1,6 +1,6 @@
 .ContainerMainDeclaration {
     width: 40%;
-    max-width: 20rem;
+    max-width: 50rem;
     display: flex;
     flex-direction: column; 
     justify-self: center;
@@ -22,4 +22,65 @@
 .LogoImageReceitaFedral {
     width: 5rem;
     height: 3rem;
+}
+
+.SectionMainDeclarationsUser {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+.DeclarationCards  {
+    width: fit-content;
+    background: rgb(180, 180, 180);
+    color: black;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.DeclarationCards:hover {
+    background: rgb(104, 104, 104);
+    color: white;
+    transition: 0.3s ease;
+}
+
+.FormDeclarationPopUpButton {
+    width: 50%;
+    padding: 0.75rem 1.5rem;
+    background-color: #9ba63d;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.FormDeclarationPopUpButton:hover {
+    background-color: #765531;
+}
+
+.PopupOverlay {
+    background: rgb(180, 180, 180);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.CloseButtonPopUp {
+    margin: 0;
+    background: #9ba63d;
+    padding: 0.2rem 0.7rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    display: flex;
+    align-self: self-end;
+    text-align: center;
+    cursor: pointer;
+}
+.CloseButtonPopUp:hover {
+    background-color: #bccb34;
+    transition: 0.3s ease;
 }
