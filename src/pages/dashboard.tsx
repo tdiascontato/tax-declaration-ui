@@ -1,36 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// src\pages\dashboard.tsx
+import React, { useState, useEffect, useRef } from 'react';
+import { useDeclaration } from '@/hooks/useDeclaration'; 
 import DeclarationForm from '../components/DeclarationForm';
 import styles from '../styles/dashboard.module.css';
 import Navbar from '@/components/NavBar';
 import { useAuth } from '@/hooks/useAuth';
 
 const Dashboard: React.FC = () => {
-    const { logout, checkAuth } = useAuth();
+    const { getDeclarations, submitDeclaration, updateDeclaration } = useDeclaration();
+    const { logout } = useAuth();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [createDeclaration, setCreateDeclaration] = useState(false);
+    const [updateDeclarationFlag, setUpdateDeclarationFlag] = useState(false);
     const [declarations, setDeclarations] = useState([]);
+    const selectedDeclaration = useRef<any>(null);
 
-    const togglePopup = () => setIsPopupOpen(!isPopupOpen);
-
-    // Function to fetch declarations
-    const fetchDeclarations = async () => {
-        try {
-            const authUser = await checkAuth();
-            if (authUser) {
-                const userId = JSON.parse(authUser).user.id;
-                const response = await axios.get(`http://localhost:4000/declarations/user/${userId}`);
-                setDeclarations(response.data);
-                console.log(response.data)
-            } else {
-                console.log('Usuário não autenticado');
-            }
-        } catch (error) {
-            console.error('Erro ao buscar declarações:', error);
+    const setFormDeclaration = (declaration: any = null) => {
+        setIsPopupOpen(true);
+        if (declaration) {
+            selectedDeclaration.current = declaration;
+            console.log("selectedDeclaration: ", selectedDeclaration.current);
+            setUpdateDeclarationFlag(true);
+        } else {
+            selectedDeclaration.current = null;
+            setCreateDeclaration(true);
         }
     };
 
-    // Fetch declarations on component mount
     useEffect(() => {
+        const fetchDeclarations = async () => {
+            try {
+                const data = await getDeclarations();
+                setDeclarations(data);
+            } catch (error) {
+                console.error('Erro ao buscar declarações:', error);
+            }
+        };
         fetchDeclarations();
     }, []);
 
@@ -48,33 +53,47 @@ const Dashboard: React.FC = () => {
             </div>
 
             <section className={styles.SectionMainDeclarationsUser}>
-                {declarations.map((declaration: any) => (
+                {!isPopupOpen && declarations && declarations.map((declaration: any) => (
                     <div 
                         key={declaration.id} 
-                        className={styles.DeclarationCards} >
-                        <p>Ano: {declaration.year}</p>
-                        <p>Data: {declaration.user.name}</p>
+                        className={styles.DeclarationCards} 
+                        onClick={() => {setFormDeclaration(declaration); setIsPopupOpen(true);}}>
+                        <p>Contribuinte: {declaration.data.fontePagadoranome}</p>
+                        <p>Ano: {declaration.data.anoApresentado}</p>
                         <p>Status: {declaration.status}</p>
                     </div>
                 ))}
-            </section>
+            </section>            
 
             <section className={styles.SectionMainDeclarationForm}>
                 {!isPopupOpen && (
-                    <button className={styles.FormDeclarationPopUpButton} onClick={togglePopup}>
+                    <button className={styles.FormDeclarationPopUpButton} onClick={() => {setCreateDeclaration(true); setIsPopupOpen(true);}}>
                         Declarações
                     </button>
                 )}
-
-                {isPopupOpen && (
-                    <section className={styles.PopupOverlay}>
-                        <button className={styles.CloseButtonPopUp} onClick={togglePopup}>
-                            &times;
-                        </button>
-                        <DeclarationForm />
-                    </section>
-                )}
             </section>
+
+            {createDeclaration && isPopupOpen && (
+                <section className={styles.PopupOverlay}>
+                    <button type='button' className={styles.CloseButtonPopUp} onClick={() => {setIsPopupOpen(false);}}> &times; </button>
+                    <DeclarationForm onSubmit={submitDeclaration}/>
+                </section>
+            )}
+ 
+            {updateDeclarationFlag && isPopupOpen && selectedDeclaration && (
+                <section className={styles.PopupOverlay}>
+                    <button 
+                        type="button" 
+                        className={styles.CloseButtonPopUp} 
+                        onClick={() => setIsPopupOpen(false)}>
+                        &times;
+                    </button>
+                    <DeclarationForm 
+                        onSubmit={(data) => updateDeclaration(selectedDeclaration.current.id, data)} 
+                        data={selectedDeclaration.current.data} 
+                    />
+                </section>
+            )}
         </main>
     );
 };

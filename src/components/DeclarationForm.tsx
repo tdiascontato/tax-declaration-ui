@@ -1,7 +1,6 @@
 // src\components\DeclarationForm.tsx
 import React, { useState } from 'react';
 import styles from '../styles/declarationform.module.css';
-import { useDeclaration } from '@/hooks/useDeclaration';
 import { useRouter } from 'next/navigation';
 
 interface FormData {
@@ -24,9 +23,13 @@ interface FormData {
     outrosrendimentos: string;
 }
 
-const DeclarationForm: React.FC = ( ) => {
+interface DelcarationFormProps {
+    data?: FormData;
+    onSubmit: (FormData: FormData) => Promise<void>;
+}
+
+const DeclarationForm: React.FC<DelcarationFormProps> = ({data, onSubmit}) => {
     const router = useRouter();
-    const { submitDeclaration } = useDeclaration();
 
     const [formData, setFormData] = useState<FormData>({
         fontePagadoranome: '',
@@ -46,23 +49,25 @@ const DeclarationForm: React.FC = ( ) => {
         valortitular: '',
         taxidenizacaorescisao: '',
         outrosrendimentos: '',
+        ...data
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target ;
-        setFormData({
-            ...formData, [name]: value,
-        });
+        setFormData((prev) => ({
+            ...prev, [name]: value,
+        }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await submitDeclaration(formData);
+            await onSubmit(formData)
             router.push("/");
             alert('Declaração enviada com sucesso!');
         } catch (error) {
             alert('Erro ao enviar a declaração!');
+            console.error(error);
         }
     };
 
@@ -79,9 +84,9 @@ const DeclarationForm: React.FC = ( ) => {
             <div>
                 <h3 className={styles.TitleHeaderLabel}>Pessoa Física Beneficiária dos Rendimentos</h3>
                 <label htmlFor="beneficiarionome">Nome Completo</label>
-                <input type="text" id="beneficiarionome" name="beneficiarionome" value={formData.beneficiarionome} onChange={handleChange} placeholder="Digite o nome completo" required />
+                <input type="text" id="beneficiarionome" name="beneficiarionome" value={formData.beneficiarionome} onChange={handleChange} placeholder="Digite o nome completo" />
                 <label htmlFor="beneficiariocpf">CPF</label>
-                <input type="text" id="beneficiariocpf" name="beneficiariocpf" value={formData.beneficiariocpf} onChange={handleChange} placeholder="Digite o CPF" required />
+                <input type="text" id="beneficiariocpf" name="beneficiariocpf" value={formData.beneficiariocpf} onChange={handleChange} placeholder="Digite o CPF" />
             </div>
             <div>
                 <h3 className={styles.TitleHeaderLabel}>Rendimentos Tributáveis, Deduções e Imposto sobre a Renda Retida na Fonte</h3>

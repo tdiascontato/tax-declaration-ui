@@ -16,8 +16,13 @@
     font-size: 0.9rem;
 }
 
+.ContainerFormDeclaration > div > label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.3rem 0;
+}
+
 .ContainerFormDeclaration > div > input {
-    width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
@@ -28,11 +33,6 @@
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 30, 0.25);
 }
 
-.ContainerFormDeclaration > div > label {
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin: 0.3rem 0;
-}
 
 .ContainerFormDeclaration > button {
     width: 50%;
