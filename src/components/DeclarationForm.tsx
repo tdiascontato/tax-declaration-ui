@@ -9,6 +9,7 @@ interface FormData {
     beneficiarionome: string;
     beneficiariocpf: string;
     anoApresentado: string;
+    status: string;
     taxtotalrendimentos: string;
     contribuicaoprevidencia: string;
     contribuicaoentidades: string;
@@ -37,6 +38,7 @@ const DeclarationForm: React.FC<DelcarationFormProps> = ({data, onSubmit}) => {
         beneficiarionome: '',
         beneficiariocpf: '',
         anoApresentado: '',
+        status: '',
         taxtotalrendimentos: '',
         contribuicaoprevidencia: '',
         contribuicaoentidades: '',
@@ -79,7 +81,26 @@ const DeclarationForm: React.FC<DelcarationFormProps> = ({data, onSubmit}) => {
                 <label htmlFor="fontePagadoracpf">Fonte pagadora Pessoa Juridica (CPF/CNPJ):</label>
                 <input type="text" id="fontePagadoracpf" name="fontePagadoracpf" value={formData.fontePagadoracpf} onChange={handleChange} placeholder="Digite o CPF" required />
                 <label htmlFor="anoApresentado">Ano da Declaração</label>
-                <input type="text" id="anoApresentado" name="anoApresentado" value={formData.anoApresentado} onChange={handleChange} placeholder="Digite o ano da Declaração" required />
+                <div className={styles.DivYearStatus}>
+                    <input type="text" id="anoApresentado" name="anoApresentado" value={formData.anoApresentado} onChange={handleChange} placeholder="Digite o ano da Declaração" required />
+                    <label htmlFor="statusCheckbox">
+                        Submetido?
+                        <input
+                            type="checkbox"
+                            id="status"
+                            name="status"
+                            checked={formData.status === 'submitted'}
+                            value={formData.status}
+                            onChange={(e) =>
+                                setFormData((prev) => ({
+                                    ...prev,
+                                    status: e.target.checked ? 'submitted' : 'Sketch',
+                                }))
+                            }
+                            required
+                        />
+                    </label>
+                </div>
             </div>
             <div>
                 <h3 className={styles.TitleHeaderLabel}>Pessoa Física Beneficiária dos Rendimentos</h3>

@@ -12,23 +12,33 @@
     flex-direction: column;
 }
 
-.TitleHeaderLabel {
-    font-size: 0.9rem;
+.DivYearStatus {
+    display: flex;
+    justify-content: space-between;
+}
+.DivYearStatus :last-child{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.ContainerFormDeclaration > div > label {
+.TitleHeaderLabel {
+    font-size: 1.5rem;
+}
+
+.ContainerFormDeclaration label {
     font-size: 1.2rem;
     font-weight: bold;
     margin: 0.3rem 0;
 }
 
-.ContainerFormDeclaration > div > input {
+.ContainerFormDeclaration input {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
     outline: none;
 }
-.ContainerFormDeclaration > div > input:focus {
+.ContainerFormDeclaration input:focus {
     border-color: #9ba63d;
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 30, 0.25);
 }

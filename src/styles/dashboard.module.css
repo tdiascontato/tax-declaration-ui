@@ -52,6 +52,17 @@
     text-align: center;
 }
 
+.ButtonDeleteDeclaration {
+    padding: 0.5rem 1rem;
+    margin: 0;
+    display: flex;
+    justify-self: center;
+    border-radius: 0.5rem;
+    border: none;
+    background: #dd6b6b;
+    cursor: pointer;
+}
+
 .SectionMainDeclarationForm {
     display: flex;
     justify-content: center

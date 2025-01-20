@@ -1,9 +1,11 @@
 // src/hooks/useDeclaration.ts
+import { useRouter } from "next/navigation";
 import { useAuth } from "./useAuth";
 import axios from "axios";
 
 export const useDeclaration = () => {
   const { checkAuth } = useAuth();
+  const router = useRouter();
 
   const submitDeclaration = async (formData: any|Object) => {
     try {
@@ -13,6 +15,7 @@ export const useDeclaration = () => {
           userId: JSON.parse(authUser).user.id,
           year: formData.anoApresentado,
           data: formData,
+          status: formData.status
         });
         
         console.log('Declaração enviada com sucesso:', response.data);
@@ -63,5 +66,24 @@ export const useDeclaration = () => {
     }
   };
 
-  return { submitDeclaration, getDeclarations, updateDeclaration };
+  const deleteDeclaration = async (declarationId: number) => {
+    try {
+      const authUser = await checkAuth();
+      if (authUser) {
+        const response = await axios.delete(
+          `http://localhost:4000/declarations/${declarationId}`
+        );
+        router.push("/");
+        console.log("Declaração deletada com sucesso:", response.data);
+        return response.data;
+      } else {
+        console.log("Usuário não autenticado");
+      }
+    } catch (error) {
+      console.error("Erro ao deletar a declaração:", error);
+      throw error;
+    }
+  };
+
+  return { submitDeclaration, getDeclarations, updateDeclaration, deleteDeclaration };
 };

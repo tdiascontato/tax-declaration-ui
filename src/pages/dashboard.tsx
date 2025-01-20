@@ -7,7 +7,7 @@ import Navbar from '@/components/NavBar';
 import { useAuth } from '@/hooks/useAuth';
 
 const Dashboard: React.FC = () => {
-    const { getDeclarations, submitDeclaration, updateDeclaration } = useDeclaration();
+    const { getDeclarations, submitDeclaration, updateDeclaration, deleteDeclaration } = useDeclaration();
     const { logout } = useAuth();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [createDeclaration, setCreateDeclaration] = useState(false);
@@ -61,6 +61,7 @@ const Dashboard: React.FC = () => {
                         <p>Contribuinte: {declaration.data.fontePagadoranome}</p>
                         <p>Ano: {declaration.data.anoApresentado}</p>
                         <p>Status: {declaration.status}</p>
+                        <button type='button' className={styles.ButtonDeleteDeclaration} onClick={()=> {deleteDeclaration(declaration.id)}}>Excluir Declaração</button>
                     </div>
                 ))}
             </section>            
