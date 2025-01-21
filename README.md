@@ -1,36 +1,169 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tax Declaration Frontend
+![alt text](public/dashboard.png)
+## Descrição
 
-## Getting Started
+Este é o frontend de uma aplicação web desenvolvida com o framework [Next.js](https://nextjs.org/) que interage com a [Tax Declaration API](https://github.com/tdiascontato/tax-declaration-api). A aplicação permite que os usuários registrem-se, visualizem e gerenciem suas declarações fiscais de forma intuitiva.
+O objetivo é utilizar de forma simples a integração Nextjs com Nestjs, usando Banco de Dados Postegres e podendo ser usado por Docker. Futuras melhorias seriam as implementações de Redis para uma consulta mais rápida e uma Modularização Atômica para um projeto mais escalonável e duradouro.
+---
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Cadastro de usuários**: Os usuários podem se registrar na plataforma para começar a gerenciar suas declarações fiscais.
+- **Gerenciamento de declarações fiscais**: Após o login, o usuário pode criar, listar e deletar declarações fiscais. Edite sua declarações clickando nos cards.
+- **Exibição de dados**: As declarações fiscais são apresentadas de forma clara e ordenada por ano.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estrutura do Projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O projeto segue a estrutura padrão do Next.js com as seguintes pastas principais:
 
-## Learn More
+- **pages**: Contém as páginas principais da aplicação (ex: login, dashboard).
+- **components**: Componentes reutilizáveis da aplicação.
+- **services**: Funções auxiliares para interagir com a Tax Declaration API.
+- **styles**: Arquivos de estilo para a aplicação.
+- **public**: Arquivos públicos (imagens, ícones).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Endpoints Consumidos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Usuários (`/users`)
 
-## Deploy on Vercel
+#### POST `/users/register`
+Registra um novo usuário na plataforma.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Body:**
+  ```json
+  {
+    "name": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Resposta Esperada**:
+  - **201 Created**: Usuário criado com sucesso.
+  - **400 Bad Request**: Email já em uso ou dados inválidos.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### GET `/users/:id`
+Obtém informações de um usuário pelo seu ID.
+
+- **Parâmetros**:
+  - `id`: ID do usuário.
+- **Resposta Esperada**:
+  - **200 OK**: Detalhes do usuário.
+  - **404 Not Found**: Usuário não encontrado.
+
+---
+
+### Declarações (`/declarations`)
+
+#### POST `/declarations`
+Cria uma nova declaração fiscal.
+
+- **Body:**
+  ```json
+  {
+    "userId": "number",
+    "year": "string",
+    "data": "JSON"
+  }
+  ```
+- **Resposta Esperada**:
+  - **201 Created**: Declaração criada com sucesso.
+  - **400 Bad Request**: Dados inválidos.
+
+#### PATCH `/declarations/update/:declarationId`
+Atualiza uma declaração fiscal existente.
+
+- **Parâmetros**:
+  - `declarationId`: ID da declaração a ser atualizada.
+- **Resposta Esperada**:
+  - **200 OK**: Declaração atualizada com sucesso.
+  - **400 Bad Request**: Dados inválidos ou ID da declaração inválido.
+  - **404 Not Found**: Declaração não encontrada.
+
+#### DELETE `/declarations/:declarationId`
+Remove uma declaração fiscal.
+
+- **Parâmetros**:
+  - `declarationId`: ID da declaração a ser removida.
+- **Resposta Esperada**:
+  - **200 OK**: Declaração deletada com sucesso.
+  - **400 Bad Request**: ID inválido.
+  - **404 Not Found**: Declaração não encontrada.
+
+---
+
+### Página Principal (`/`)
+
+#### GET `/`
+Retorna uma mensagem de boas-vindas.
+
+- **Resposta Esperada**:
+  - **200 OK**: Texto "Hello World!"
+
+---
+
+## Como Executar o Projeto
+
+### Requisitos
+
+- Node.js (versão 14 ou superior)
+- Yarn (ou npm)
+- A API backend [Tax Declaration API](https://github.com/tdiascontato/tax-declaration-api) deve estar em execução.
+
+## Execução com Docker
+
+1. Certifique-se de ter o Docker instalado em sua máquina.
+2. Clone o repositório:
+   ```bash
+   git clone https://github.com/tdiascontato/tax-declaration-ui
+   cd tax-declaration-api
+   ```
+3. Construa e inicie os contêineres:
+   ```bash
+   docker-compose up --build
+   ```
+4. A API estará acessível em: `http://localhost:4000`
+
+### Passos para Execução sem Docker
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/tdiascontato/tax-declaration-frontend
+   cd tax-declaration-frontend
+   ```
+
+2. Instale as dependências:
+   ```bash
+   yarn install
+   ```
+   ou, caso esteja usando npm:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   yarn dev
+   ```
+   ou, caso esteja usando npm:
+   ```bash
+   npm run dev
+   ```
+
+4. A aplicação estará acessível em: `http://localhost:3000`
+
+---
+
+## Tecnologias Utilizadas
+
+- **Next.js:** Framework para aplicações React com renderização do lado servidor (SSR).
+- **React:** Biblioteca JavaScript para construção de interfaces de usuário.
+- **Axios:** Cliente HTTP para interagir com a Tax Declaration API.
+- **CSS Modules:** Estilização modularizada para os componentes.
+
+## Licença
+
+Este projeto é licenciado sob a [MIT License](LICENSE).

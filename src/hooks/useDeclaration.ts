@@ -11,8 +11,10 @@ export const useDeclaration = () => {
     try {
       const authUser = await checkAuth();
       if (authUser) {
+        console.log(authUser)
+        console.log(formData)
         const response = await axios.post("http://localhost:4000/declarations/", {
-          userId: JSON.parse(authUser).user.id,
+          userId: authUser.id,
           year: formData.anoApresentado,
           data: formData,
           status: formData.status
@@ -33,7 +35,7 @@ export const useDeclaration = () => {
     try {
       const authUser = await checkAuth();
       if (authUser) {
-        const userId = JSON.parse(authUser).user.id;
+        const userId = authUser.id;
         const response = await axios.get(`http://localhost:4000/declarations/user/${userId}`);
         
         console.log('Declarações recebidas', response.data);

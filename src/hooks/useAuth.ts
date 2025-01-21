@@ -15,7 +15,8 @@ export const useAuth = () => {
       router.push("/login");
       return false;
     } else { 
-      return storedUser;
+      const parsedUser = JSON.parse(storedUser);
+      return parsedUser; 
     }
   };
 

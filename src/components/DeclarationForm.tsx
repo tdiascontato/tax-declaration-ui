@@ -38,7 +38,7 @@ const DeclarationForm: React.FC<DelcarationFormProps> = ({data, onSubmit}) => {
         beneficiarionome: '',
         beneficiariocpf: '',
         anoApresentado: '',
-        status: '',
+        status: 'Sketch',
         taxtotalrendimentos: '',
         contribuicaoprevidencia: '',
         contribuicaoentidades: '',
@@ -97,7 +97,6 @@ const DeclarationForm: React.FC<DelcarationFormProps> = ({data, onSubmit}) => {
                                     status: e.target.checked ? 'submitted' : 'Sketch',
                                 }))
                             }
-                            required
                         />
                     </label>
                 </div>

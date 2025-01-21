@@ -15,7 +15,7 @@ const Home = () => {
     const verifyUser = async () => {
       const authUser = await checkAuth();
       if (authUser) {
-        setUser(JSON.parse(authUser).user.name);
+        setUser(authUser.name);
       }
     };
 
